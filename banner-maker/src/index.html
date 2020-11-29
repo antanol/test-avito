@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Создатель баннеров для Авито</title>
+    <link rel="stylesheet" href="index.css">
+  </head>
+  <body>
+    Добрый день!<br>
+    С помощью нашей утилиты Вы сможете создать свой баннер.<br>
+    Для этого нужно ответить всего на несколько простых вопросов.
+
+    <section class="banner-maker">
+      <form enctype="multipart/form-data" method="post">
+        <div class="example-area">
+          Пример вашего баннера
+        </div>
+        <div class="option">
+          <label onclick="show_sub(0)"><input type="radio" name="background-type" value="img">Добавить изображение на фон</label>
+          <div class="sub hidden-sub">
+            <input type="file" accept="image/*">
+          </div>
+        </div>
+        <div class="option">
+          <label onclick="show_sub(1)"><input type="radio" name="background-type" value="plain">Выбрать цвет фона</label>
+          <div class="sub hidden-sub">
+            <input type="color" name="color-plain" oninput="oneColor()">
+          </div>
+        </div>
+        <div class="option">
+          <label onclick="show_sub(2)"><input type="radio" name="background-type" value="gradient">Сделать фоном градиент</label>
+          <div class="sub hidden-sub">
+              Цвет 1 <input oninput="gradientFill()" type="color" name="color-grade1"> <br>
+              Цвет 2 <input oninput="gradientFill()" type="color" name="color-grade2" value="#ffffff"> <br>
+              Выберите тип градиента: <br>
+                <label><input oninput="gradientFill()" type="radio" name="gradient-type" id="linear" checked> Линейный</label> <br>
+                <label><input oninput="gradientFill()" type="radio" name="gradient-type" id="radial"> Радиальный</label> <br>
+                <label><input oninput="gradientFill()" type="radio" name="gradient-type" id="repeat-linear"> Повторяющийся линейный</label> <br>
+                <label><input oninput="gradientFill()" type="radio" name="gradient-type" id="repeat-radial"> Повторяющийся радиальный</label> <br>
+                <label><input oninput="gradientFill()" type="radio" name="gradient-type" id="conic"> Конический</label> <br>
+            </div>
+          </div>
+          <div class="comment">
+            Текст баннера:
+            <textarea name="banner-text" cols="30" rows="10" placeholder="Текст вашего баннера (не обязательно)"></textarea>
+          </div>
+      </form>
+    </section>
+
+    <script src="./renderer.js"></script>
+  </body>
+</html>
