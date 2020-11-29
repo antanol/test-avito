@@ -21,6 +21,22 @@ function show_sub(index){
     // }
 };
 
+function groundImage() {
+    let input = document.querySelector(".banner-image");
+    if (input.files.length > 1){
+        // если кто-то решит через devTools проставить мультипл в input с загрузкой изображений
+        document.querySelector(".error-field").innerText = "Пожалуйста, выберите для баннера только одно изображение!";
+    }else{
+        let file = input.files[0],
+            exampleArea = document.querySelector(".example-area"),
+            src = URL.createObjectURL(file);
+
+        exampleArea.innerText = "";
+        exampleArea.style.background = `url(${src}) no-repeat`;
+        exampleArea.style.backgroundSize = "contain";
+    }
+}
+
 function oneColor(){
     let exampleArea = document.querySelector(".example-area");
     exampleArea.innerText = "";

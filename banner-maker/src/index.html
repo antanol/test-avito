@@ -8,9 +8,11 @@
   <body>
     Добрый день!<br>
     С помощью нашей утилиты Вы сможете создать свой баннер.<br>
-    Для этого нужно ответить всего на несколько простых вопросов.
+    Для этого нужно ответить всего на несколько простых вопросов.<br>
+    <span class="warning">Обратите внимание, что изображение для фона должно быть рабмером 200*150 пикселей или аналогичных пропорций!</span>
 
     <section class="banner-maker">
+      <div class="error-field"></div>
       <form enctype="multipart/form-data" method="post">
         <div class="example-area">
           Пример вашего баннера
@@ -18,7 +20,7 @@
         <div class="option">
           <label onclick="show_sub(0)"><input type="radio" name="background-type" value="img">Добавить изображение на фон</label>
           <div class="sub hidden-sub">
-            <input type="file" accept="image/*">
+            <input oninput="groundImage()" class="banner-image" type="file" accept="image/*">
           </div>
         </div>
         <div class="option">

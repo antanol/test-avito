@@ -5,6 +5,14 @@ body {
   padding: 2rem;
 }
 
+.warning{
+  color:orange;
+}
+
+.error-field{
+  color: red;
+}
+
 .banner-maker{
   margin: 20px;
   padding: 10px;
