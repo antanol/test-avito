@@ -36,9 +36,21 @@
               <select oninput="gradientFill()" name="gradient-type">
                 <option value="linear" selected> Линейный</option>
                 <option value="radial"> Радиальный</option>
-                <option value="repeat-linear"> Повторяющийся линейный</option>
-                <option value="repeat-radial"> Повторяющийся радиальный</option>
+                <option value="repeating-linear"> Повторяющийся линейный</option>
+                <option value="repeating-radial"> Повторяющийся радиальный</option>
                 <option value="conic"> Конический</option>
+              </select>
+              <br>
+              Выберите направление градиента:<br>
+              <select oninput="gradientFill()" name="gradient-direction">
+                <option value="top"> Снизу вверх</option>
+                <option value="left"> Справа налево</option>
+                <option value="bottom"> Сверху вниз</option>
+                <option value="right"> Слева направо</option>
+                <option value="top left"> От правого нижнего угла к левому верхнему</option>
+                <option value="top right"> От левого нижнего угла к правому верхнему</option>
+                <option value="bottom left"> От правого верхнего угла к левому нижнему</option>
+                <option value="bottom right"> От левого верхнего угла к правому нижнему</option>
               </select>
           </div>
         </div>

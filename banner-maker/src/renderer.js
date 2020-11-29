@@ -32,11 +32,27 @@ function gradientFill(){
     exampleArea.innerText = "";
 
     let color1 =  document.querySelector("input[name='color-grade1']").value,
-        color2 =  document.querySelector("input[name='color-grade2']").value;
-    
-    let typeGradient = document.querySelector("select[name='gradient-type']").value;
+        color2 =  document.querySelector("input[name='color-grade2']").value,
+        typeGradient = document.querySelector("select[name='gradient-type']").value,
+        directionGradient = document.querySelector("select[name='gradient-direction']").value;
 
-    exampleArea.style.background = `${typeGradient}-gradient(${color1},${color2})`;
+    switch (typeGradient){
+        case 'linear':
+            exampleArea.style.background = `${typeGradient}-gradient(to ${directionGradient},${color1},${color2})`;
+            break;
+        case 'radial':
+            exampleArea.style.background = `${typeGradient}-gradient(at ${directionGradient},${color1},${color2})`;
+            break;
+        case 'repeating-linear':
+            // заглушка на ширину линии
+            exampleArea.style.background = `${typeGradient}-gradient(to ${directionGradient},${color1},${color2} 10px)`;
+            break;
+        case 'repeating-radial':
+            // заглушка на ширину
+            // + надо приделать выбор формы и положения центра
+            exampleArea.style.background = `${typeGradient}-gradient(at ${directionGradient},${color1},${color2} 10px)`;
+            break;
+    }
 
 
 }
