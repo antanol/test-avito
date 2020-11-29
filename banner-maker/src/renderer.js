@@ -34,15 +34,7 @@ function gradientFill(){
     let color1 =  document.querySelector("input[name='color-grade1']").value,
         color2 =  document.querySelector("input[name='color-grade2']").value;
     
-    let typeGradient, 
-        allGrads = document.querySelectorAll("input[name='gradient-type']");
-    
-    for (let grad of allGrads){
-        if (grad.checked){
-            typeGradient = grad.id;
-            console.log(grad.id);
-        };
-    }
+    let typeGradient = document.querySelector("select[name='gradient-type']").value;
 
     exampleArea.style.background = `${typeGradient}-gradient(${color1},${color2})`;
 

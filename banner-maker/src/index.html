@@ -33,17 +33,19 @@
               Цвет 1 <input oninput="gradientFill()" type="color" name="color-grade1"> <br>
               Цвет 2 <input oninput="gradientFill()" type="color" name="color-grade2" value="#ffffff"> <br>
               Выберите тип градиента: <br>
-                <label><input oninput="gradientFill()" type="radio" name="gradient-type" id="linear" checked> Линейный</label> <br>
-                <label><input oninput="gradientFill()" type="radio" name="gradient-type" id="radial"> Радиальный</label> <br>
-                <label><input oninput="gradientFill()" type="radio" name="gradient-type" id="repeat-linear"> Повторяющийся линейный</label> <br>
-                <label><input oninput="gradientFill()" type="radio" name="gradient-type" id="repeat-radial"> Повторяющийся радиальный</label> <br>
-                <label><input oninput="gradientFill()" type="radio" name="gradient-type" id="conic"> Конический</label> <br>
-            </div>
+              <select oninput="gradientFill()" name="gradient-type">
+                <option value="linear" selected> Линейный</option>
+                <option value="radial"> Радиальный</option>
+                <option value="repeat-linear"> Повторяющийся линейный</option>
+                <option value="repeat-radial"> Повторяющийся радиальный</option>
+                <option value="conic"> Конический</option>
+              </select>
           </div>
-          <div class="comment">
-            Текст баннера:
-            <textarea name="banner-text" cols="30" rows="10" placeholder="Текст вашего баннера (не обязательно)"></textarea>
-          </div>
+        </div>
+        <div class="comment">
+          Текст баннера:
+          <textarea name="banner-text" cols="30" rows="10" placeholder="Текст вашего баннера (не обязательно)"></textarea>
+        </div>
       </form>
     </section>
 
