@@ -33,6 +33,13 @@ function show_sub(index){
     // }
 };
 
+function backgroundZeroing(){
+    // Функция, обнуляющая фон баннера, т.к. в CSS3 фоны накладываются друг на друга (наложение можно сделать в дальнейшем при развитии приложения)
+    // Функция добавляется в начало каждой функции, добавляющей новый фон
+
+    document.querySelector(".example-area").style.background = "";
+}
+
 function groundImage() {
     // Функция, ставящая фоном баннера картинку, которую подгрузит юзер
 
@@ -41,6 +48,8 @@ function groundImage() {
         // если кто-то решит через devTools проставить мультипл в input с загрузкой изображений
         document.querySelector(".error-field").innerText = "Пожалуйста, выберите для баннера только одно изображение!";
     }else{
+        backgroundZeroing();
+
         let file = input.files[0],
             exampleArea = document.querySelector(".example-area"),
             src = URL.createObjectURL(file);
@@ -54,6 +63,8 @@ function groundImage() {
 function oneColor(){
     // Функция, ставящая фоном баннера сплошную заливку
 
+    backgroundZeroing();
+
     let exampleArea = document.querySelector(".example-area");
     exampleArea.innerText = "";
     exampleArea.style.backgroundColor = document.querySelector("input[name='color-plain']").value;
@@ -62,6 +73,8 @@ function oneColor(){
 function gradientFill(){
     // Функция, ставящая заливкой градиент, по заданным пользователям параметрам.
     
+    backgroundZeroing();
+
     let exampleArea = document.querySelector(".example-area");
     exampleArea.innerText = "";
 
