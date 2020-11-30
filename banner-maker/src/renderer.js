@@ -1,9 +1,16 @@
 window.onload = ()=>{
+    // функция подставляет в поле предупреждения размеры окна просмотра.
+    // -2 пикселя для каждого значения, т.к. "пример баннера" обоясан рамкой в 1рх
+    
     let bannerSize = document.querySelector(".example-area");
     document.querySelector(".example-area-size").innerText = `${bannerSize.offsetWidth-2}*${bannerSize.offsetHeight-2}`;
 };
 
 function show_sub(index){
+    // функция, открывающая подменю при выборе того или иного фона для баннера
+    // При этом ранее открытые меню будут скрыты
+    // (данная функция может быть изменена в дальнейшем, если будет реализовываться наложение фонов друг на друга)
+
     let allSubs = document.querySelectorAll(".sub");
     for (let i=0; i<allSubs.length; i++){
         if (!allSubs[i].classList.contains("hidden-sub")){
@@ -13,10 +20,10 @@ function show_sub(index){
 
     let currentSub = allSubs[Number(index)];
     currentSub.classList.remove("hidden-sub");
-    // switch(Number[index]){
-    //     case '0':
-    //         // пока заглушка
-    //         break;
+
+    // Возможность сразу же при выборе пункта с заливкой получить фон.
+    // Отключено на случай, если юзер промахнется и случайно в уже готовом баннере откроет другую заливку. Ведь тогда всё "слетит")
+    // switch(Number(index)){
     //     case 1:
     //         oneColor();
     //         break;
@@ -27,6 +34,8 @@ function show_sub(index){
 };
 
 function groundImage() {
+    // Функция, ставящая фоном баннера картинку, которую подгрузит юзер
+
     let input = document.querySelector(".banner-image");
     if (input.files.length > 1){
         // если кто-то решит через devTools проставить мультипл в input с загрузкой изображений
@@ -43,12 +52,16 @@ function groundImage() {
 }
 
 function oneColor(){
+    // Функция, ставящая фоном баннера сплошную заливку
+
     let exampleArea = document.querySelector(".example-area");
     exampleArea.innerText = "";
     exampleArea.style.backgroundColor = document.querySelector("input[name='color-plain']").value;
 }
 
 function gradientFill(){
+    // Функция, ставящая заливкой градиент, по заданным пользователям параметрам.
+    
     let exampleArea = document.querySelector(".example-area");
     exampleArea.innerText = "";
 
