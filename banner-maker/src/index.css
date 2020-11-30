@@ -35,6 +35,14 @@ body {
   display: none;
 }
 
+.for-repeat-linear {
+  display: none;
+}
+
+input[name="depth-line"]{
+  width: 40px;
+}
+
 .example-area{
   float: right;
 

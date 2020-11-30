@@ -42,7 +42,10 @@
                 <option value="repeating-radial"> Повторяющийся радиальный</option>
                 <option value="conic"> Конический</option>
               </select>
-              <br>
+              <label class="for-repeat-linear">
+                Введите ширину линии:
+                <input type="number" name="depth-line" min="1" value="10" max="200">
+              </label>
               Выберите направление градиента:<br>
               <select oninput="gradientFill()" name="gradient-direction">
                 <option value="top"> Снизу вверх</option>

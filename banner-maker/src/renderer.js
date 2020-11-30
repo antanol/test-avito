@@ -60,8 +60,16 @@ function gradientFill(){
             exampleArea.style.background = `${typeGradient}-gradient(at ${directionGradient},${color1},${color2})`;
             break;
         case 'repeating-linear':
-            // заглушка на ширину линии
-            exampleArea.style.background = `${typeGradient}-gradient(to ${directionGradient},${color1},${color2} 10px)`;
+            document.querySelector(".for-repeat-linear").style.display = "block";
+            let inputDepth = document.querySelector("input[name='depth-line']");
+            let depthLine = inputDepth.value;
+            exampleArea.style.background = `${typeGradient}-gradient(to ${directionGradient},${color1},${color2} ${depthLine}px)`;
+
+            inputDepth.oninput = ()=>{
+                let inputDepth = document.querySelector("input[name='depth-line']");
+                let depthLine = inputDepth.value;
+                exampleArea.style.background = `${typeGradient}-gradient(to ${directionGradient},${color1},${color2} ${depthLine}px)`;
+            };
             break;
         case 'repeating-radial':
             // заглушка на ширину
