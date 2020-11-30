@@ -46,8 +46,8 @@ input[name="depth-line"]{
 .example-area{
   float: right;
 
-  min-height: 200px;
-  min-width: 150px;
+  height: 200px;
+  width: 150px;
 
   border: 1px dotted gray;
 

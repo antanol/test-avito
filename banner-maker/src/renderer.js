@@ -1,3 +1,8 @@
+window.onload = ()=>{
+    let bannerSize = document.querySelector(".example-area");
+    document.querySelector(".example-area-size").innerText = `${bannerSize.offsetWidth-2}*${bannerSize.offsetHeight-2}`;
+};
+
 function show_sub(index){
     let allSubs = document.querySelectorAll(".sub");
     for (let i=0; i<allSubs.length; i++){
