@@ -1,9 +1,23 @@
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
+
 window.onload = ()=>{
     // функция подставляет в поле предупреждения размеры окна просмотра.
     // -2 пикселя для каждого значения, т.к. "пример баннера" обоясан рамкой в 1рх
     
     let bannerSize = document.querySelector(".example-area");
-    document.querySelector(".example-area-size").innerText = `${bannerSize.offsetWidth-2}*${bannerSize.offsetHeight-2}`;
+    let widthOfBanner = bannerSize.offsetWidth-2,
+        heightOfBanner = bannerSize.offsetHeight-2;
+    document.querySelector(".example-area-size").innerText = `${widthOfBanner}*${heightOfBanner}`;
+    
+    // для корректного отображения, в атрибуте и css канваса должны быть одинаковые размеры
+    canvas.setAttribute("height", `${heightOfBanner}`);
+    canvas.setAttribute("width", `${widthOfBanner}`);
+
+    // Вставка текста "Пример вашего баннера"
+    ctx.fillStyle = "gray";
+    ctx.font = "BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif";
+    ctx.fillText("Пример вашего баннера", 20, heightOfBanner/2);
 };
 
 function show_sub(index){
@@ -111,3 +125,9 @@ function gradientFill(){
 
 
 }
+
+function addTextInBanner(){
+    // Функция, добавляющая(введённый пользователем) текст в баннер
+
+    let textArea = document.querySelector("textarea[name='banner-text']").value;
+};

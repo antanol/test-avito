@@ -14,9 +14,7 @@
     <section class="banner-maker">
       <div class="error-field"></div>
       <form enctype="multipart/form-data" method="post">
-        <div class="example-area">
-          Пример вашего баннера
-        </div>
+        <canvas class="example-area"></canvas>
         <div class="option">
           <label onclick="show_sub(0)"><input type="radio" name="background-type" value="img">Добавить изображение на фон</label>
           <div class="sub hidden-sub">
@@ -61,7 +59,7 @@
         </div>
         <div class="comment">
           Текст баннера:
-          <textarea name="banner-text" cols="30" rows="10" placeholder="Текст вашего баннера (не обязательно)"></textarea>
+          <textarea oninput="addTextInBanner()" name="banner-text" cols="30" rows="10" placeholder="Текст вашего баннера (не обязательно)"></textarea>
         </div>
       </form>
     </section>

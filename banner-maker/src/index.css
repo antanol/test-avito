@@ -50,11 +50,4 @@ input[name="depth-line"]{
   width: 150px;
 
   border: 1px dotted gray;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  color: gray;
-  font-size: 12px;
 }
