@@ -14,19 +14,24 @@
     <section class="banner-maker">
       <div class="error-field"></div>
       <form enctype="multipart/form-data" method="post">
-        <canvas class="example-area"></canvas>
+        <canvas class="example-area" id="image-layer"></canvas>
+        <canvas class="example-area" id="fill-layer"></canvas>
+        <canvas class="example-area" id="text-layer"></canvas>
+        
         <div class="option">
           <label onclick="show_sub(0)"><input type="radio" name="background-type" value="img">Добавить изображение на фон</label>
           <div class="sub hidden-sub">
             <input oninput="groundImage()" class="banner-image" type="file" accept="image/*">
           </div>
         </div>
+
         <div class="option">
           <label onclick="show_sub(1)"><input type="radio" name="background-type" value="plain">Выбрать цвет фона</label>
           <div class="sub hidden-sub">
             <input type="color" name="color-plain" oninput="oneColor()">
           </div>
         </div>
+
         <div class="option">
           <label onclick="show_sub(2)"><input type="radio" name="background-type" value="gradient">Сделать фоном градиент</label>
           <div class="sub hidden-sub">
@@ -36,16 +41,10 @@
               <select oninput="gradientFill()" name="gradient-type">
                 <option value="linear" selected> Линейный</option>
                 <option value="radial"> Радиальный</option>
-                <option value="repeating-linear"> Повторяющийся линейный</option>
-                <option value="repeating-radial"> Повторяющийся радиальный</option>
-                <option value="conic"> Конический</option>
               </select>
-              <label class="for-repeat-linear">
-                Введите ширину линии:
-                <input type="number" name="depth-line" min="1" value="10" max="200">
-              </label>
+              <br/>
               Выберите направление градиента:<br>
-              <select oninput="gradientFill()" name="gradient-direction">
+              <select class="direction-linear direction-hidden" oninput="gradientFill()" name="gradient-direction">
                 <option value="top"> Снизу вверх</option>
                 <option value="left"> Справа налево</option>
                 <option value="bottom"> Сверху вниз</option>
@@ -55,8 +54,13 @@
                 <option value="bottom left"> От правого верхнего угла к левому нижнему</option>
                 <option value="bottom right"> От левого верхнего угла к правому нижнему</option>
               </select>
+              <div class="direction-radial direction-hidden">
+                Перемещения по оси x: <input type="range" id="direction-x" value="0"> <br>
+                И y: <input type="range" id="direction-y" value="0">
+              </div>
           </div>
         </div>
+        
         <div class="comment">
           Текст баннера:
           <textarea oninput="addTextInBanner()" name="banner-text" cols="30" rows="10" placeholder="Текст вашего баннера (не обязательно)"></textarea>
