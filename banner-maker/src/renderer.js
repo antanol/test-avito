@@ -421,3 +421,18 @@ function saveCanvasAsHTML(){
         console.log('Что-то пошло не так...', err);
     });
 }
+
+function saveCanvasAsJSON(){
+    let imageData = canvas_hide.toDataURL();
+    let json = JSON.stringify(imageData);
+
+    //пытаемся скопировать текст в буфер обмена
+    navigator.clipboard.writeText(json)
+    .then(() => {
+        // Получилось!
+        console.log(`Вы скопировали ${json}`);
+    })
+    .catch(err => {
+        console.log('Что-то пошло не так...', err);
+    });
+}
