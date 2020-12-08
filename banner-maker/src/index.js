@@ -1,46 +1,39 @@
-const { app, BrowserWindow } = require('electron');
-const path = require('path');
+const http=require("http"), //модуль http
+        fs=require("fs"); //модуль файловой системы
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
-  app.quit();
+// Имена параметров запроса(Requrst) и ответа(Response) принято сокращать до req и res соответственно
+function serveStaticFile(res, path, contentType, responseCode){
+    if (!responseCode) responseCode = 200;
+    fs.readFile(__dirname+path,function(err,data){
+        if (err) {
+            res.writeHead(500,{'Content-Type': 'text/plain'});
+            res.end("500 - Internal error");
+        }else{
+            res.writeHead(responseCode, {"Content-Type": contentType});
+            res.end(data);
+        }
+    });
 }
 
-const createWindow = () => {
-  // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 600,
-  });
+// Имена параметров запроса(Requrst) и ответа(Response) принято сокращать до req и res соответственно
+http.createServer(function(req,res){
+    console.log("URL страницы: " + req.url);
+    const path=req.url.replace(/\/?(?:\?.*)?$/, "").toLowerCase();
+    console.log("path страницы: " + path);
+    switch (path){
+        case "":
+            serveStaticFile(res,'/index.html',"text/html");
+            break;
+        case "/renderer.js":
+            serveStaticFile(res,'/renderer.js',"application/javascript");
+            break;
+        case "/index.css":
+            serveStaticFile(res,'/index.css',"text/css");
+            break;
+        default:
+            serveStaticFile(res,'/404.html',"text/html",404);
+            break;
+    }
+}).listen(3999);
 
-  // and load the index.html of the app.
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
-};
-
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.on('ready', createWindow);
-
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
-});
-
-app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
-  }
-});
-
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
+console.log("Сервер запущен на 3999. Чтобы закрыть (ctrl+c)");

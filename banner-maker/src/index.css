@@ -85,12 +85,13 @@ body {
   text-align: center;
 }
 
-.banner-maker .hide-ending {
-  height: 300px;
-  width: 200px;
-}
-
 .banner-maker .text-size {
   width: 35px;
+}
+
+.hide-ending {
+  height: 300px;
+  width: 200px;
+  display: none;
 }
 /*# sourceMappingURL=index.css.map */
