@@ -412,7 +412,7 @@ function saveCanvasAsHTML(){
     let html = `<img src = "${image.src}">`;
 
     //пытаемся скопировать текст в буфер обмена
-    navigator.clipboard.writeText(html);
+    navigator.clipboard.writeText(html)
     .then(() => {
         // Получилось!
         console.log(`Вы скопировали ${html}`);
