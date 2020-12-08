@@ -393,13 +393,31 @@ function unblockedBtns(){
 }
 
 function saveCanvasAsPNG(){
-    var imageData = canvas_hide.toDataURL();
-    var image = new Image();
+    let imageData = canvas_hide.toDataURL();
+    let image = new Image();
     image.src = imageData;
     
-    var link = document.createElement("a");
- 
+    let link = document.createElement("a");
     link.setAttribute("href", image.src);
+
     link.setAttribute("download", "yourBanner");
     link.click();
+}
+
+function saveCanvasAsHTML(){
+    let imageData = canvas_hide.toDataURL();
+    let image = new Image();
+    image.src = imageData;
+    
+    let html = `<img src = "${image.src}">`;
+
+    //пытаемся скопировать текст в буфер обмена
+    navigator.clipboard.writeText(html);
+    .then(() => {
+        // Получилось!
+        console.log(`Вы скопировали ${html}`);
+    })
+    .catch(err => {
+        console.log('Что-то пошло не так...', err);
+    });
 }
