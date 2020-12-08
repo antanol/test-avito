@@ -1,18 +1,30 @@
 const canvas_layer1 = document.querySelector("#image-layer"),
     canvas_layer2 = document.querySelector("#fill-layer"),
-    canvas_layer3 = document.querySelector("#text-layer");
-const ctx1 = canvas_layer1.getContext("2d"),
+    canvas_layer3 = document.querySelector("#text-layer"),
+    canvas_hide = document.querySelector("canvas.hide-ending");
+const ctx1 = canvas_layer1.getContext("2d"),    
     ctx2 = canvas_layer2.getContext("2d"),
-    ctx3 = canvas_layer3.getContext("2d");
+    ctx3 = canvas_layer3.getContext("2d"),
+    ctx_hide = canvas_hide.getContext("2d");
 
 // Объявляем переменную, в которой будет храниться всё, происходящее с нашим канвасом
 let system = {
     width: 150,
     height: 200,
+    currentImgSrc: false,
     currentFill: false,
     currentColor: false,
+    coordsGradient: false,
     currentText: false
-}
+};
+
+let textStyle = {
+        maxWidth: system.width - 10,
+        startHeight: system.height/2,
+        color: 'gray',
+        fontFamily: "BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif",
+        fontSize: "16px"
+};
 
 window.onload = ()=>{
     // функция подставляет в поле предупреждения размеры окна просмотра.
@@ -29,15 +41,17 @@ window.onload = ()=>{
     canvas_layer2.setAttribute("width", widthOfBanner);
     canvas_layer3.setAttribute("height", heightOfBanner);
     canvas_layer3.setAttribute("width", widthOfBanner);
+    canvas_hide.setAttribute("height", heightOfBanner);
+    canvas_hide.setAttribute("width", widthOfBanner);
     
     document.querySelector("#direction-x").setAttribute("max", widthOfBanner);
     document.querySelector("#direction-y").setAttribute("max", heightOfBanner)
 
     // Вставка текста "Пример вашего баннера"
     let textBanner = "Пример вашего баннера";
-    ctx3.fillStyle = "gray";
-    ctx3.font = "16px BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif";
-    ctx3.fillText(textBanner, 10, heightOfBanner/2);
+    ctx3.fillStyle = textStyle.color;
+    ctx3.font = `${textStyle.fontSize} ${textStyle.fontFamily}`;
+    ctx3.fillText(textBanner, 10, textStyle.maxWidth);
 
     system.width = widthOfBanner;
     system.height = heightOfBanner;
@@ -51,14 +65,11 @@ function mouseActions(evt) {
 		reRenderSys(system, 'currentFill', "image");
 	} else if (evt.target.name == 'color-plain'){
 		reRenderSys(system, 'currentFill', "mono");
-    } else if ((evt.target.name == 'color-grade1') ||
-            (evt.target.name == 'color-grade2') ||
-            (evt.target.name == 'gradient-type') ||
-            (evt.target.name == 'gradient-direction')){
-		reRenderSys(system, 'currentFill', "gradient");
-	} else if (evt.target.name == "banner-text"){
-		reRenderSys(system);
-    }
+    } else if (evt.target.name == 'gradient-type' && evt.target.value=="linear"){
+		reRenderSys(system, 'currentFill', "linear");
+    } else if (evt.target.name == 'gradient-type' && evt.target.value=="radial"){
+		reRenderSys(system, 'currentFill', "radial");
+	}
 }
 
 function reRenderSys(obj, elem, action) {
@@ -109,7 +120,6 @@ function groundImage() {
         ctx1.clearRect(0, 0, system.width, system.height);
 
         let file = input.files[0],
-            imgLayer = document.querySelector(".image-layer"),
             src = URL.createObjectURL(file);
 
         let img = new Image();
@@ -119,22 +129,26 @@ function groundImage() {
             // Рисуем изображение от точки с координатами 0, 0
             // подстраиваем картинку под размеры поля, для этого задаём ширину под ширину канваса, а высоту высчитываем по формуле
             ctx1.drawImage(img, 0, 0, system.width, system.width*img.height/img.width);
+
+            system.currentImgSrc = src;
         }
     }
 }
 
 function oneColor(){
     // Функция, ставящая фоном баннера сплошную заливку
+    let userColor = document.querySelector("input[name='color-plain']").value;
 
     ctx2.clearRect(0, 0, system.width, system.height);
-    ctx2.fillStyle = document.querySelector("input[name='color-plain']").value;
+    ctx2.fillStyle = userColor;
+    system.currentColor = userColor;
     ctx2.fillRect(0, 0, system.width, system.height);
 }
 
 function gradientFill(){
     // Функция, ставящая заливкой градиент, по заданным пользователям параметрам.
     
-    ctx2.clearRect(0, 0, system.width, system.height);
+    ctx3.clearRect(0, 0, system.width, system.height);
     let color1 =  document.querySelector("input[name='color-grade1']").value,
         color2 =  document.querySelector("input[name='color-grade2']").value,
         typeGradient = document.querySelector("select[name='gradient-type']").value,
@@ -147,30 +161,62 @@ function gradientFill(){
 
     switch (typeGradient){
         case 'linear':
+            system.currentFill = "linear";
             if (directionLinear.classList.contains("direction-hidden")){
                 directionLinear.classList.remove("direction-hidden");
                 directionRadial.classList.add("direction-hidden");
             }
+
+            let x1,y1,x2,y2;
             if (directionGradient=="top"){
-                gradient = ctx2.createLinearGradient(0,system.height, 0,0);
+                x1 = 0;
+                y1 = system.height;
+                x2 = 0;
+                y2 = 0;
             }else if (directionGradient=="left"){
-                gradient = ctx2.createLinearGradient(system.width,0, 0,0);
+                x1 = system.width;
+                y1 = 0;
+                x2 = 0;
+                y2 = 0;
             }else if (directionGradient=="bottom"){
-                gradient = ctx2.createLinearGradient(0,0, 0,system.height);
+                x1 = 0;
+                y1 = 0;
+                x2 = 0;
+                y2 = system.height;
             }else if (directionGradient=="right"){
-                gradient = ctx2.createLinearGradient(0,0, system.width,0);
+                x1 = 0;
+                y1 = 0;
+                x2 = system.width;
+                y2 = 0;
             }else if (directionGradient=="top left"){
-                gradient = ctx2.createLinearGradient(system.width,system.height, 0,0);
+                x1 = system.width;
+                y1 = system.height;
+                x2 = 0;
+                y2 = 0;
             }else if (directionGradient=="top right"){
-                gradient = ctx2.createLinearGradient(0,system.height, system.width,0);
+                x1 = 0;
+                y1 = system.height;
+                x2 = system.width;
+                y2 = 0;
             }else if (directionGradient=="bottom left"){
-                gradient = ctx2.createLinearGradient(system.width,0, 0,system.height);
+                x1 = system.width;
+                y1 = 0;
+                x2 = 0;
+                y2 = system.height;
             }else if (directionGradient=="bottom right"){
-                gradient = ctx2.createLinearGradient(0, 0, system.width,system.height);
+                x1 = 0;
+                y1 =  0;
+                x2 = system.width;
+                y2 = system.height;
             }
+
+            gradient = ctx2.createLinearGradient(x1,y1, x2,y2);
+            system.coordsGradient = [x1, y1, x2, y2];
+
             // Добавление контрольных точек
             gradient.addColorStop(0, color1);
             gradient.addColorStop(1, color2);
+            system.currentColor = [color1, color2];
 
             // Установка стиля заливки и отрисовка прямоугольника градиента
             ctx2.fillStyle = gradient;
@@ -186,6 +232,7 @@ function gradientFill(){
             // Добавление контрольных точек
             gradient.addColorStop(0, color1);
             gradient.addColorStop(1, color2);
+            system.currentColor = [color1, color2];
             
             // Установка стиля заливки и отрисовка прямоугольника градиента
             ctx2.fillStyle = gradient;
@@ -210,6 +257,7 @@ function radialPosition(){
     ctx2.clearRect(0, 0, system.width, system.height);
 
     gradient = ctx2.createRadialGradient(120,100,system.height, varX,varY,30);
+    system.coordsGradient = [120,100,system.height, varX,varY,30];
     
     // Добавление контрольных точек
     gradient.addColorStop(0, color1);
@@ -218,7 +266,6 @@ function radialPosition(){
     // Установка стиля заливки и отрисовка прямоугольника градиента
     ctx2.fillStyle = gradient;
     ctx2.fillRect(0, 0, system.width, system.height);
-
 }
 
 function addTextInBanner(){
@@ -226,24 +273,25 @@ function addTextInBanner(){
 
     ctx3.clearRect(0, 0, system.width, system.height);
 
-    let userText = document.querySelector("textarea[name='banner-text']"),
-        maxWidth = system.width-10;
+    let userText = document.querySelector("textarea[name='banner-text']");
 
-    if (Math.floor(ctx3.measureText(userText.value).width) > maxWidth){
-        let lines = getLines(ctx3, userText.value, maxWidth);
-        let startHeight = system.height/2;
+    ctx3.fillStyle = textStyle.color;
+    ctx3.font = `${textStyle.fontSize} ${textStyle.fontFamily}`;
+
+    if (Math.floor(ctx3.measureText(userText.value).width) > textStyle.maxWidth){
+        let lines = getLines(ctx3, userText.value, textStyle.maxWidth);
+        let startHeight = textStyle.startHeight;
         for (let line of lines){
-            ctx3.fillText(line, 10, startHeight, maxWidth);
+            ctx3.fillText(line, 10, startHeight, textStyle.maxWidth);
             startHeight += 20;
         }
+
+        system.currentText = lines;
     }else{
-        ctx3.fillStyle = "gray";
-        ctx3.font = "BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif";
-        ctx3.fillText(userText.value, 10, system.height/2, maxWidth);
+        ctx3.fillText(userText.value, 10, textStyle.startHeight, textStyle.maxWidth);
         system.currentText = userText.value;
     }
 };
-
 
 function getLines(ctx, text, maxWidth) {
     let words = text.split(" ");
@@ -261,6 +309,97 @@ function getLines(ctx, text, maxWidth) {
         }
     }
     lines.push(currentLine);
-    console.log(lines)
     return lines;
+}
+
+function editTextSize(){
+    textStyle.fontSize = document.querySelector(".text-size").value+"px";
+    
+    addTextInBanner();
+}
+
+function editTextColor(){
+    textStyle.color = document.querySelector('input[name="text-color"]').value;
+    addTextInBanner();
+}
+
+function unblockedBtns(){
+    ctx_hide.clearRect(0, 0, system.width, system.height);
+    let btns = document.querySelectorAll(".sub-btn");
+
+    for (let btn of btns){
+        btn.disabled = false;
+    }
+
+    if (system.currentImgSrc){
+        let img = new Image();
+        img.src = system.currentImgSrc;
+        
+        img.onload = function() {
+            ctx_hide.drawImage(img, 0, 0, system.width, system.width*img.height/img.width);
+        }
+    }
+
+    if (system.currentFill=="mono"){
+        ctx_hide.fillStyle = system.currentColor;
+        ctx_hide.fillRect(0,0, system.width, system.height);
+    }else if (system.currentFill=="linear"){
+        let gradient = ctx_hide.createLinearGradient(system.coordsGradient[0], 
+            system.coordsGradient[1], 
+            system.coordsGradient[2],
+            system.coordsGradient[3]);
+
+        // Добавление контрольных точек
+        gradient.addColorStop(0, system.currentColor[0]);
+        gradient.addColorStop(1, system.currentColor[1]);
+
+        // Установка стиля заливки и отрисовка прямоугольника градиента
+        ctx_hide.fillStyle = gradient;
+        ctx_hide.fillRect(0, 0, system.width, system.height);
+    }else if (system.currentFill=="radial"){
+        let gradient;
+        if (document.querySelector("#direction-x").value != 0 && document.querySelector("#direction-y").value !=0){
+            gradient = ctx_hide.createRadialGradient(system.coordsGradient[0],
+                                                        system.coordsGradient[1],
+                                                        system.coordsGradient[2],
+                                                        system.coordsGradient[3],
+                                                        system.coordsGradient[4],
+                                                        system.coordsGradient[5]);
+        }else{
+            gradient = ctx_hide.createRadialGradient(120,100,system.height, 0,0,30);
+        }
+        
+        gradient.addColorStop(0, system.currentColor[0]);
+        gradient.addColorStop(1, system.currentColor[1]);
+        
+        ctx_hide.fillStyle = gradient;
+        ctx_hide.fillRect(0, 0, system.width, system.height);
+    }
+
+    if (system.currentText){
+        ctx_hide.fillStyle = textStyle.color;
+        ctx_hide.font = `${textStyle.fontSize} ${textStyle.fontFamily}`;
+        
+        if (typeof(system.currentText) == "string"){
+            ctx_hide.fillText(system.currentText, 10, textStyle.startHeight, textStyle.maxWidth);
+        }else{
+            let startHeight = textStyle.startHeight;
+            for (let line of system.currentText){
+                ctx_hide.fillText(line, 10, startHeight, textStyle.maxWidth);
+                startHeight += 20;
+            }
+        }
+    }
+}
+
+function saveCanvasAsPNG(){
+    var imageData = canvas_hide.toDataURL();
+    var image = new Image();
+    image.src = imageData;
+    
+    var link = document.createElement("a");
+ 
+    link.setAttribute("href", image.src);
+    link.setAttribute("download", "yourBanner");
+    link.click();
 }

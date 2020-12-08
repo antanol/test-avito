@@ -16,26 +16,23 @@ body {
   border: 1px solid gray;
   display: -ms-grid;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-areas: "one one one"
- "two two three"
- "two two three"
- "two two three"
- ". four .";
+  -ms-grid-columns: (1fr)[3];
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-areas: "one one one" "two two three" "two two three" "two two three" ". four .";
 }
 
 .banner-maker .error-field {
   color: red;
-  grid-row: 1;
-  grid-column: 1;
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
   -ms-grid-column-span: 3;
   grid-area: one;
 }
 
 .banner-maker form {
-  grid-row: 2;
+  -ms-grid-row: 2;
   -ms-grid-row-span: 3;
-  grid-column: 1;
+  -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-area: two;
 }
@@ -55,9 +52,9 @@ body {
 
 .banner-maker .example {
   position: relative;
-  grid-row: 2;
+  -ms-grid-row: 2;
   -ms-grid-row-span: 3;
-  grid-column: 3;
+  -ms-grid-column: 3;
   grid-area: three;
 }
 
@@ -82,10 +79,18 @@ body {
 }
 
 .banner-maker .btns-zone {
-  grid-row: 5;
-  grid-column: 2;
+  -ms-grid-row: 5;
+  -ms-grid-column: 2;
   grid-area: four;
-  -ms-grid-column-align: center;
-      justify-self: center;
+  text-align: center;
+}
+
+.banner-maker .hide-ending {
+  height: 300px;
+  width: 200px;
+}
+
+.banner-maker .text-size {
+  width: 35px;
 }
 /*# sourceMappingURL=index.css.map */
