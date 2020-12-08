@@ -17,18 +17,16 @@ function serveStaticFile(res, path, contentType, responseCode){
 
 // Имена параметров запроса(Requrst) и ответа(Response) принято сокращать до req и res соответственно
 http.createServer(function(req,res){
-    console.log("URL страницы: " + req.url);
     const path=req.url.replace(/\/?(?:\?.*)?$/, "").toLowerCase();
-    console.log("path страницы: " + path);
     switch (path){
         case "":
             serveStaticFile(res,'/index.html',"text/html");
             break;
-        case "/renderer.js":
-            serveStaticFile(res,'/renderer.js',"application/javascript");
+        case "/scripts/renderer.js":
+            serveStaticFile(res,'/scripts/renderer.js',"application/javascript");
             break;
-        case "/index.css":
-            serveStaticFile(res,'/index.css',"text/css");
+        case "/styles/index.css":
+            serveStaticFile(res,'/styles/index.css',"text/css");
             break;
         default:
             serveStaticFile(res,'/404.html',"text/html",404);

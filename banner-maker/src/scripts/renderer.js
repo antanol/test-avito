@@ -9,8 +9,8 @@ const ctx1 = canvas_layer1.getContext("2d"),
 
 // Объявляем переменную, в которой будет храниться всё, происходящее с нашим канвасом
 let system = {
-    width: 150,
-    height: 200,
+    width: 200,
+    height: 300,
     currentImgSrc: false,
     currentFill: false,
     currentColor: false,
@@ -18,12 +18,13 @@ let system = {
     currentText: false
 };
 
+// Объект со стилями для текста на канвасе
 let textStyle = {
-        maxWidth: system.width - 10,
-        startHeight: system.height/2,
-        color: 'gray',
-        fontFamily: "BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif",
-        fontSize: "16px"
+    maxWidth: system.width - 10,
+    startHeight: system.height/2,
+    color: 'gray',
+    fontFamily: "BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif",
+    fontSize: "16px"
 };
 
 window.onload = ()=>{
@@ -51,7 +52,7 @@ window.onload = ()=>{
     let textBanner = "Пример вашего баннера";
     ctx3.fillStyle = textStyle.color;
     ctx3.font = `${textStyle.fontSize} ${textStyle.fontFamily}`;
-    ctx3.fillText(textBanner, 10, textStyle.maxWidth);
+    ctx3.fillText(textBanner, 10, textStyle.startHeight, textStyle.maxWidth);
 
     system.width = widthOfBanner;
     system.height = heightOfBanner;
@@ -80,6 +81,7 @@ function reRenderSys(obj, elem, action) {
         ctx3.clearRect(0, 0, system.width, system.height);
     }
 }
+
 
 function show_sub(index){
     // функция, открывающая подменю при выборе того или иного фона для баннера
@@ -320,6 +322,11 @@ function editTextSize(){
 
 function editTextColor(){
     textStyle.color = document.querySelector('input[name="text-color"]').value;
+    addTextInBanner();
+}
+
+function editTextPos(){
+    textStyle.startHeight = document.querySelector('input[name="text-pos"]').value*system.height/100;
     addTextInBanner();
 }
 

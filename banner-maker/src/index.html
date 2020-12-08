@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Создатель баннеров для Авито</title>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="styles/index.css">
   </head>
   <body>
     Добрый день!<br>
@@ -24,7 +24,7 @@
         <div class="option">
           <label onclick="show_sub(1)"><input type="radio" name="background-type" value="plain">Выбрать цвет фона</label>
           <div class="sub hidden-sub">
-            <input type="color" name="color-plain" oninput="oneColor()">
+            <input type="color" name="color-plain" oninput="oneColor()"><br>
           </div>
         </div>
 
@@ -61,7 +61,8 @@
           Текст баннера: <br>
           <textarea oninput="addTextInBanner()" name="banner-text" cols="50" rows="3" placeholder="Текст вашего баннера (не обязательно)"></textarea>
           Размер шрифта: <input class="text-size" oninput="editTextSize()" type="number" min="8" value="16" max="72">пикселей <br>
-          Цвет шрифта: <input oninput="editTextColor()" type="color" name="text-color" value="#888888">
+          Цвет шрифта: <input oninput="editTextColor()" type="color" name="text-color" value="#888888"> <br>
+          Положение текста: <input oninput="editTextPos()" type="range" name="text-pos" min="10" value="50" max="100">
         </div>
       </form>
 
@@ -82,6 +83,6 @@
 
     <canvas class="hide-ending"></canvas>
 
-    <script src="./renderer.js"></script>
+    <script src="scripts/renderer.js"></script>
   </body>
 </html>
