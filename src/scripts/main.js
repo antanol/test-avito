@@ -1,7 +1,11 @@
+// создаём три канваса – слои нашего изображения. 
+// 1(самый нижний) - картинка, 2 - заливка, 3 - текст
+// + невидимый канвас, в котором будет сгенерирована итоговая картинка, после нажатия кнопки "сохранить баннер"
 const canvas_layer1 = document.querySelector("#image-layer"),
     canvas_layer2 = document.querySelector("#fill-layer"),
     canvas_layer3 = document.querySelector("#text-layer"),
     canvas_hide = document.querySelector("canvas.hide-ending");
+
 const ctx1 = canvas_layer1.getContext("2d"),    
     ctx2 = canvas_layer2.getContext("2d"),
     ctx3 = canvas_layer3.getContext("2d"),
@@ -59,6 +63,57 @@ window.onload = ()=>{
     system.currentText = textBanner;
 };
 
+// слушатели на развёртывании настроек для заливок / загрузки изображения
+let menuSubs = document.querySelectorAll("input[name='background-type']");
+for (let sub of menuSubs){
+    sub.addEventListener("change", show_sub);
+}
+
+// слушатель на добавление картинки
+let loaderImage = document.querySelector(".banner-image");
+loaderImage.addEventListener("input", groundImage);
+
+// слушатель на выбор сплошной заливки
+let singleColor = document.querySelector("input[name='color-plain']");
+singleColor.addEventListener("input", oneColor);
+
+// слушатели на различные параметры градиента
+let colorsGradient = document.querySelectorAll(".color-gradient"),
+    typeGradient = document.querySelector("select[name='gradient-type']"),
+    directionLinear = document.querySelector(".direction-linear"),
+    directionRadialX = document.getElementById("direction-x"),
+    directionRadialY = document.getElementById("direction-y");
+
+for (let color of colorsGradient){
+    color.addEventListener("input", gradientFill);
+}
+typeGradient.addEventListener("input", gradientFill);
+directionLinear.addEventListener("input", gradientFill);
+directionRadialX.addEventListener("input", radialPosition);
+directionRadialY.addEventListener("input", radialPosition);
+
+// Слушатели на изменения пользовательского текста
+let userText = document.querySelector("textarea[name='banner-text']"),
+    textSize = document.querySelector("input[name='text-size']"),
+    colorText = document.querySelector("input[name='text-color']"),
+    directionText = document.querySelector("input[name='text-direction']");
+
+userText.addEventListener("input", addTextInBanner);
+textSize.addEventListener("input", editTextSize);
+colorText.addEventListener("input", editTextColor);
+directionText.addEventListener("input", editTextPos);
+
+// Слушатели на финальных кнопках
+let saveBtn = document.querySelector(".btn-save"),
+    pngBtn = document.querySelector(".btn-PNG"),
+    htmlBtn = document.querySelector(".btn-HTML"),
+    jsonBtn = document.querySelector(".btn-JSON");
+
+saveBtn.addEventListener("click", unblockedBtns);
+pngBtn.addEventListener("click", saveCanvasAsPNG);
+htmlBtn.addEventListener("click", saveCanvasAsHTML);
+jsonBtn.addEventListener("click", saveCanvasAsJSON);
+
 // реагирует на выбор значений формы и их изменения, и обновляет данные объекта system в соответствии с действиями пользователя.
 document.oninput = mouseActions;
 function mouseActions(evt) {
@@ -83,11 +138,11 @@ function reRenderSys(obj, elem, action) {
 }
 
 
-function show_sub(index){
+function show_sub(evt){
     // функция, открывающая подменю при выборе того или иного фона для баннера
     // При этом ранее открытые меню будут скрыты
     // (данная функция может быть изменена в дальнейшем, если будет реализовываться наложение фонов друг на друга)
-
+    let index = evt.target.dataset.id;
     let allSubs = document.querySelectorAll(".sub");
     for (let i=0; i<allSubs.length; i++){
         if (!allSubs[i].classList.contains("hidden-sub")){
@@ -110,10 +165,10 @@ function show_sub(index){
     // }
 };
 
-function groundImage() {
+function groundImage(evt) {
     // Функция, ставящая фоном баннера картинку, которую подгрузит юзер
 
-    let input = document.querySelector(".banner-image");
+    let input = evt.target;
     if (input.files.length > 1){
         // если кто-то решит через devTools проставить мультипл в input с загрузкой изображений
         document.querySelector(".error-field").innerText = "Пожалуйста, выберите для баннера только одно изображение!";
@@ -137,9 +192,9 @@ function groundImage() {
     }
 }
 
-function oneColor(){
+function oneColor(evt){
     // Функция, ставящая фоном баннера сплошную заливку
-    let userColor = document.querySelector("input[name='color-plain']").value;
+    let userColor = evt.target.value;
 
     ctx2.clearRect(0, 0, system.width, system.height);
     ctx2.fillStyle = userColor;
@@ -276,6 +331,8 @@ function addTextInBanner(){
     ctx3.clearRect(0, 0, system.width, system.height);
 
     let userText = document.querySelector("textarea[name='banner-text']");
+    // здесь мы не используем evt.target, т.к. событие может быть вызвано не только через слушатель, 
+    // но и через изменения других свойств для текста (пока что)
 
     ctx3.fillStyle = textStyle.color;
     ctx3.font = `${textStyle.fontSize} ${textStyle.fontFamily}`;
@@ -314,26 +371,25 @@ function getLines(ctx, text, maxWidth) {
     return lines;
 }
 
-function editTextSize(){
-    textStyle.fontSize = document.querySelector(".text-size").value+"px";
-    
+function editTextSize(evt){
+    textStyle.fontSize = evt.target.value+"px";
     addTextInBanner();
 }
 
-function editTextColor(){
-    textStyle.color = document.querySelector('input[name="text-color"]').value;
+function editTextColor(evt){
+    textStyle.color = evt.target.value;
     addTextInBanner();
 }
 
-function editTextPos(){
-    textStyle.startHeight = document.querySelector('input[name="text-pos"]').value*system.height/100;
+function editTextPos(evt){
+    textStyle.startHeight = evt.target.value * system.height / 100;
     addTextInBanner();
 }
 
 function unblockedBtns(){
     ctx_hide.clearRect(0, 0, system.width, system.height);
-    let btns = document.querySelectorAll(".sub-btn");
 
+    let btns = document.querySelectorAll(".sub-btn");
     for (let btn of btns){
         btn.disabled = false;
     }

@@ -15,32 +15,32 @@
       <div class="error-field"></div>
       <form enctype="multipart/form-data" method="post">        
         <div class="option">
-          <label onclick="show_sub(0)"><input type="radio" name="background-type" value="img">Добавить изображение на фон</label>
+          <label><input data-id="0" type="radio" name="background-type" value="img">Добавить изображение на фон</label>
           <div class="sub hidden-sub">
-            <input oninput="groundImage()" class="banner-image" type="file" accept="image/*">
+            <input class="banner-image" type="file" accept="image/*">
           </div>
         </div>
 
         <div class="option">
-          <label onclick="show_sub(1)"><input type="radio" name="background-type" value="plain">Выбрать цвет фона</label>
+          <label><input data-id="1" type="radio" name="background-type" value="plain">Выбрать цвет фона</label>
           <div class="sub hidden-sub">
-            <input type="color" name="color-plain" oninput="oneColor()"><br>
+            <input type="color" name="color-plain"><br>
           </div>
         </div>
 
         <div class="option">
-          <label onclick="show_sub(2)"><input type="radio" name="background-type" value="gradient">Сделать фоном градиент</label>
+          <label><input data-id="2" type="radio" name="background-type" value="gradient">Сделать фоном градиент</label>
           <div class="sub hidden-sub">
-              Цвет 1 <input oninput="gradientFill()" type="color" name="color-grade1"> <br>
-              Цвет 2 <input oninput="gradientFill()" type="color" name="color-grade2" value="#ffffff"> <br>
+              Цвет 1 <input class="color-gradient" type="color" name="color-grade1"> <br>
+              Цвет 2 <input class="color-gradient" type="color" name="color-grade2" value="#ffffff"> <br>
               Выберите тип градиента: <br>
-              <select oninput="gradientFill()" name="gradient-type">
+              <select name="gradient-type">
                 <option value="linear" selected> Линейный</option>
                 <option value="radial"> Радиальный</option>
               </select>
               <br/>
               Выберите направление градиента:<br>
-              <select class="direction-linear" oninput="gradientFill()" name="gradient-direction">
+              <select class="direction-linear" name="gradient-direction">
                 <option value="top"> Снизу вверх</option>
                 <option value="left"> Справа налево</option>
                 <option value="bottom"> Сверху вниз</option>
@@ -51,18 +51,18 @@
                 <option value="bottom right"> От левого верхнего угла к правому нижнему</option>
               </select>
               <div class="direction-radial direction-hidden">
-                Перемещения по оси x: <span class="insert-x"></span><input oninput ="radialPosition()" type="range" id="direction-x" value="0" step="1"> <br>
-                И y: <span class="insert-y"></span><input oninput ="radialPosition()" type="range" id="direction-y" value="0" step="1">
+                Перемещения по оси x: <span class="insert-x"></span><input type="range" id="direction-x" value="0" step="1"> <br>
+                И y: <span class="insert-y"></span><input type="range" id="direction-y" value="0" step="1">
               </div>
           </div>
         </div>
         
         <div class="comment">
           Текст баннера: <br>
-          <textarea oninput="addTextInBanner()" name="banner-text" cols="50" rows="3" placeholder="Текст вашего баннера (не обязательно)"></textarea>
-          Размер шрифта: <input class="text-size" oninput="editTextSize()" type="number" min="8" value="16" max="72">пикселей <br>
-          Цвет шрифта: <input oninput="editTextColor()" type="color" name="text-color" value="#888888"> <br>
-          Положение текста: <input oninput="editTextPos()" type="range" name="text-pos" min="10" value="50" max="100">
+          <textarea name="banner-text" cols="45" rows="3" placeholder="Текст вашего баннера (не обязательно)"></textarea> <br>
+          Размер шрифта: <input name="text-size" type="number" min="8" value="16" max="72">пикселей <br>
+          Цвет шрифта: <input type="color" name="text-color" value="#888888"> <br>
+          Положение текста: <input type="range" name="text-direction" min="10" value="50" max="100">
         </div>
       </form>
 
@@ -73,16 +73,16 @@
       </div>
 
       <div class="btns-zone">
-        <button onclick="unblockedBtns()" class="btn-save">Сохранить баннер</button>
+        <button class="btn-save">Сохранить баннер</button>
         <br>
-        <button onclick="saveCanvasAsPNG()" class="sub-btn btn-PNG" disabled="disabled">В PNG</button>
-        <button onclick="saveCanvasAsHTML()" class="sub-btn btn-HTML" disabled="disabled">В HTML</button>
-        <button onclick="saveCanvasAsJSON()" class="sub-btn btn-JSON" disabled="disabled">В JSON</button>
+        <button class="sub-btn btn-PNG" disabled="disabled">В PNG</button>
+        <button class="sub-btn btn-HTML" disabled="disabled">В HTML</button>
+        <button class="sub-btn btn-JSON" disabled="disabled">В JSON</button>
       </div>
     </section>
 
     <canvas class="hide-ending"></canvas>
 
-    <script src="scripts/renderer.js"></script>
+    <script src="scripts/main.js"></script>
   </body>
 </html>
