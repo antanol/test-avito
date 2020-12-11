@@ -20,16 +20,16 @@ http.createServer(function(req,res){
     const path=req.url.replace(/\/?(?:\?.*)?$/, "").toLowerCase();
     switch (path){
         case "":
-            serveStaticFile(res,'/index.html',"text/html");
+            serveStaticFile(res,'/src/index.html',"text/html");
             break;
         case "/scripts/renderer.js":
-            serveStaticFile(res,'/scripts/renderer.js',"application/javascript");
+            serveStaticFile(res,'/src/scripts/renderer.js',"application/javascript");
             break;
         case "/styles/index.css":
-            serveStaticFile(res,'/styles/index.css',"text/css");
+            serveStaticFile(res,'/src/styles/index.css',"text/css");
             break;
         default:
-            serveStaticFile(res,'/404.html',"text/html",404);
+            serveStaticFile(res,'/src/404.html',"text/html",404);
             break;
     }
 }).listen(3999);
