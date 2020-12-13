@@ -21,11 +21,11 @@ function unblockedBtns(){
     }else{ 
         drawUpperLayers();
     }
+
+    document.querySelector(".hide-address").style.display = "block";
 }
 
 function drawUpperLayers(){
-    console.log(system, textStyle)
-
     if (system.existanseLayer["fillLayer"]){
         if (system.currentFill=="mono"){
             ctx[0].globalAlpha = system.currentAlpha["mono"];
@@ -99,10 +99,18 @@ function saveCanvasAsPNG(){
 
 function saveCanvasAsHTML(){
     let imageData = canvas_layer[0].toDataURL();
+    let userResource = document.querySelector("#url-link").value;
     let image = new Image();
     image.src = imageData;
     
-    let html = `<img src = "${image.src}">`;
+    let html;
+    if (userResource.substr(0,6)=="https:" || userResource.substr(0,6)=="http:/"){
+        html = `<a href = "${userResource}"><img src = "${image.src}"></a>`;
+    }else if (userResource){
+        html = `<a href = "http://${userResource}"><img src = "${image.src}"></a>`;
+    }else{
+        html = `<img src = "${image.src}">`;
+    }
 
     //пытаемся скопировать текст в буфер обмена
     navigator.clipboard.writeText(html)

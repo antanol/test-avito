@@ -41,7 +41,7 @@ body {
   display: grid;
   -ms-grid-columns: (1fr)[3];
       grid-template-columns: repeat(3, 1fr);
-      grid-template-areas: "one one one" "two two three" "two two three" "two two three" ". four .";
+      grid-template-areas: "one one one" "two two three" "two two three" "two two three" "four four four";
 }
 
 .banner-maker .error-field {
@@ -94,7 +94,8 @@ body {
 
 .banner-maker .btns-zone {
   -ms-grid-row: 5;
-  -ms-grid-column: 2;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
   grid-area: four;
   text-align: center;
 }
@@ -106,6 +107,10 @@ body {
 .hide-ending {
   height: 300px;
   width: 200px;
+  display: none;
+}
+
+.hide-address {
   display: none;
 }
 /*# sourceMappingURL=index.css.map */
