@@ -9,6 +9,29 @@ body {
   color: orange;
 }
 
+.option {
+  margin: 10px;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.option input[name="background-type"] {
+  display: none;
+}
+
+.option .fa {
+  float: right;
+}
+
+.option .sub .fa {
+  color: red;
+}
+
+.option .hidden-sub,
+.option .direction-hidden {
+  display: none;
+}
+
 .banner-maker {
   margin: 20px;
   padding: 10px;
@@ -35,15 +58,6 @@ body {
   -ms-grid-column: 1;
   -ms-grid-column-span: 2;
   grid-area: two;
-}
-
-.banner-maker .option {
-  margin: 10px 0;
-}
-
-.banner-maker .option .hidden-sub,
-.banner-maker .option .direction-hidden {
-  display: none;
 }
 
 .banner-maker .comment {

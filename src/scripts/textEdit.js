@@ -25,6 +25,7 @@ function addTextInBanner(){
         ctx[3].fillText(userText.value, 10, textStyle.startHeight, textStyle.maxWidth);
         system.currentText = userText.value;
     }
+    system.existanseLayer["textLayer"] = true;
 };
 
 function getLines(ctx, text, maxWidth) {

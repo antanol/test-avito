@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <title>Создатель баннеров для Авито</title>
     <link rel="stylesheet" href="styles/index.css">
+
+<!-- Подключение font awesome для стрелочек -->
+    <script src="https://use.fontawesome.com/3a05ab18ac.js"></script>
   </head>
   <body>
     Добрый день!<br>
@@ -15,24 +18,41 @@
       <div class="error-field"></div>
       <form enctype="multipart/form-data" method="post">        
         <div class="option">
-          <label><input data-id="0" type="radio" name="background-type" value="img">Добавить изображение на фон</label>
+          <header data-id="0">
+            <input type="checkbox" name="background-type" value="img">
+            Добавить изображение на фон
+            <i data-id="0" class="fa fa-chevron-down arrows" aria-hidden="true"></i>
+          </header>
           <div class="sub hidden-sub">
+            <i class="fa fa-times" aria-hidden="true" title="Удалить слой" data-id="1"></i>
             <input class="banner-image" type="file" accept="image/*">
           </div>
         </div>
 
         <div class="option">
-          <label><input data-id="1" type="radio" name="background-type" value="plain">Выбрать цвет фона</label>
+          <header data-id="1">
+            <input type="checkbox" name="background-type" value="plain">
+            Добавить однотонную заливку
+            <i data-id="1" class="fa fa-chevron-down arrows" aria-hidden="true"></i>
+          </header>
           <div class="sub hidden-sub">
-            <input type="color" name="color-plain"><br>
+            <i class="fa fa-times" aria-hidden="true" title="Удалить слой" data-id="2"></i>
+            Цвет: <input type="color" name="color-plain"><br>
+            Прозрачность заливки: <input type="range" name="alpha-mono" min="1" max="100" value="100"><br>
           </div>
         </div>
 
         <div class="option">
-          <label><input data-id="2" type="radio" name="background-type" value="gradient">Сделать фоном градиент</label>
+          <header data-id="2">
+            <input type="checkbox" name="background-type"  value="gradient">
+            Сделать фоном градиент
+            <i data-id="2" class="fa fa-chevron-down arrows" aria-hidden="true"></i>
+          </header>
           <div class="sub hidden-sub">
+            <i class="fa fa-times" aria-hidden="true" title="Удалить слой" data-id="3"></i>
               Цвет 1 <input class="color-gradient" type="color" name="color-grade1"> <br>
               Цвет 2 <input class="color-gradient" type="color" name="color-grade2" value="#ffffff"> <br>
+              Прозрачность заливки: <input type="range" name="alpha-grad" min="1" max="100" value="100"><br>
               Выберите тип градиента: <br>
               <select name="gradient-type">
                 <option value="linear" selected> Линейный</option>

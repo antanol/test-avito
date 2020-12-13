@@ -1,7 +1,8 @@
 import {canvas_layer, ctx, system, textStyle} from './variables.js';
+import clearLayer from './clearLayer.js';
 import groundImage from './groundImage.js';
-import oneColor from './oneColor.js';
-import {gradientFill, radialPosition} from './gradientFill.js';
+import {oneColor, editAlphaMono} from './oneColor.js';
+import {gradientFill, radialPosition, editAlphaGradient} from './gradientFill.js';
 import {addTextInBanner, editTextSize, editTextColor, editTextPos} from './textEdit.js';
 import {unblockedBtns, saveCanvasAsPNG, saveCanvasAsHTML, saveCanvasAsJSON} from './btnsControl.js';
 
@@ -38,9 +39,15 @@ window.onload = ()=>{
 };
 
 // слушатели на развёртывании настроек для заливок / загрузки изображения
-let menuSubs = document.querySelectorAll("input[name='background-type']");
+let menuSubs = document.querySelectorAll(".option header");
 for (let sub of menuSubs){
-    sub.addEventListener("change", showSub);
+    sub.addEventListener("click", showSub);
+}
+
+// слушатели на удаление "слоя"
+let clearThem = document.querySelectorAll(".fa-times");
+for (let clearIt of clearThem){
+    clearIt.addEventListener("click", clearLayer);
 }
 
 // слушатель на добавление картинки
@@ -48,11 +55,14 @@ let loaderImage = document.querySelector(".banner-image");
 loaderImage.addEventListener("input", groundImage);
 
 // слушатель на выбор сплошной заливки
-let singleColor = document.querySelector("input[name='color-plain']");
+let singleColor = document.querySelector("input[name='color-plain']"),
+    alphaSingleColor = document.querySelector("input[name='alpha-mono']");
 singleColor.addEventListener("input", oneColor);
+alphaSingleColor.addEventListener("input", editAlphaMono)
 
 // слушатели на различные параметры градиента
 let colorsGradient = document.querySelectorAll(".color-gradient"),
+    alphaGradient = document.querySelector("input[name='alpha-grad']"),
     typeGradient = document.querySelector("select[name='gradient-type']"),
     directionLinear = document.querySelector(".direction-linear"),
     directionRadialX = document.getElementById("direction-x"),
@@ -61,6 +71,7 @@ let colorsGradient = document.querySelectorAll(".color-gradient"),
 for (let color of colorsGradient){
     color.addEventListener("input", gradientFill);
 }
+alphaGradient.addEventListener("input", editAlphaGradient);
 typeGradient.addEventListener("input", gradientFill);
 directionLinear.addEventListener("input", gradientFill);
 directionRadialX.addEventListener("input", radialPosition);
@@ -88,43 +99,36 @@ pngBtn.addEventListener("click", saveCanvasAsPNG);
 htmlBtn.addEventListener("click", saveCanvasAsHTML);
 jsonBtn.addEventListener("click", saveCanvasAsJSON);
 
-// реагирует на выбор значений формы и их изменения, и обновляет данные объекта system в соответствии с действиями пользователя.
-document.oninput = mouseActions;
-function mouseActions(evt) {
-	if (evt.target.classList.contains('banner-image')){
-		reRenderSys(system, 'currentFill', "image");
-	} else if (evt.target.name == 'color-plain'){
-		reRenderSys(system, 'currentFill', "mono");
-    } else if (evt.target.name == 'gradient-type' && evt.target.value=="linear"){
-		reRenderSys(system, 'currentFill', "linear");
-    } else if (evt.target.name == 'gradient-type' && evt.target.value=="radial"){
-		reRenderSys(system, 'currentFill', "radial");
-	}
-}
-
-function reRenderSys(obj, elem, action) {
-    obj[elem] = action;
-    
-    if (system.currentText == 'Пример вашего баннера'){
-        system.currentText = '';
-        ctx[3].clearRect(0, 0, system.width, system.height);
-    }
-}
-
 function showSub(evt){
     // функция, открывающая подменю при выборе того или иного фона для баннера
     // При этом ранее открытые меню будут скрыты
     // (данная функция может быть изменена в дальнейшем, если будет реализовываться наложение фонов друг на друга)
-    let index = evt.target.dataset.id;
+    let index = Number(evt.target.dataset.id);
+    let checkboxes = document.querySelectorAll("input[type='checkbox']");
+    let arrows = document.querySelectorAll(".fa.arrows");
     let allSubs = document.querySelectorAll(".sub");
-    for (let i=0; i<allSubs.length; i++){
-        if (!allSubs[i].classList.contains("hidden-sub")){
-            allSubs[i].classList.add("hidden-sub");
-        }
-    };
 
-    let currentSub = allSubs[Number(index)];
-    currentSub.classList.remove("hidden-sub");
+    // for (let i=0; i<allSubs.length; i++){
+    //     if (!allSubs[i].classList.contains("hidden-sub")){
+    //         allSubs[i].classList.add("hidden-sub");
+    //     }
+    // };
+    if (system.currentText == 'Пример вашего баннера'){
+        system.currentText = '';
+        ctx[3].clearRect(0, 0, system.width, system.height);
+    }
+    
+    if (arrows[index].classList.contains("fa-chevron-down")){
+        checkboxes[index].checked = true;
+        arrows[index].classList.remove("fa-chevron-down");
+        arrows[index].classList.add("fa-chevron-up");
+        allSubs[index].classList.remove("hidden-sub");
+    }else{
+        checkboxes[index].checked = false;
+        arrows[index].classList.remove("fa-chevron-up");
+        arrows[index].classList.add("fa-chevron-down");
+        allSubs[index].classList.add("hidden-sub");
+    }
 
     // Возможность сразу же при выборе пункта с заливкой получить фон.
     // Отключено на случай, если юзер промахнется и случайно в уже готовом баннере откроет другую заливку. Ведь тогда всё "слетит")
@@ -136,4 +140,4 @@ function showSub(evt){
     //         gradientFill();
     //         break;
     // }
-};
+}

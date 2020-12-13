@@ -24,6 +24,7 @@ function groundImage(evt) {
 
             system.currentImgSrc = src;
         }
+        system.existanseLayer["imgLayer"] = true;
     }
 }
 

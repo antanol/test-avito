@@ -1,59 +1,75 @@
 import {canvas_layer, ctx, system, textStyle} from './variables.js';
 
 function unblockedBtns(){
+    ctx[0].fillStyle = "#FF0000";
     ctx[0].clearRect(0, 0, system.width, system.height);
 
     let btns = document.querySelectorAll(".sub-btn");
     for (let btn of btns){
         btn.disabled = false;
     }
-
-    if (system.currentImgSrc){
+    
+    if (system.existanseLayer["imgLayer"]){
         let img = new Image();
         img.src = system.currentImgSrc;
         
         img.onload = function() {
             ctx[0].drawImage(img, 0, 0, system.width, system.width*img.height/img.width);
+            // рисуем оставшиеся слои только после подгрухки изображения, иначе слои путаются 
+            drawUpperLayers();
         }
+    }else{ 
+        drawUpperLayers();
+    }
+}
+
+function drawUpperLayers(){
+    console.log(system, textStyle)
+
+    if (system.existanseLayer["fillLayer"]){
+        if (system.currentFill=="mono"){
+            ctx[0].globalAlpha = system.currentAlpha["mono"];
+            ctx[0].fillStyle = system.currentColor;
+            ctx[0].fillRect(0,0, system.width, system.height);
+        }else if (system.currentFill=="linear"){
+            ctx[0].globalAlpha = system.currentAlpha["gradient"];
+
+            let gradient = ctx[0].createLinearGradient(system.coordsGradient[0], 
+                system.coordsGradient[1], 
+                system.coordsGradient[2],
+                system.coordsGradient[3]);
+
+            // Добавление контрольных точек
+            gradient.addColorStop(0, system.currentColor[0]);
+            gradient.addColorStop(1, system.currentColor[1]);
+
+            // Установка стиля заливки и отрисовка прямоугольника градиента
+            ctx[0].fillStyle = gradient;
+            ctx[0].fillRect(0, 0, system.width, system.height);
+        }else if (system.currentFill=="radial"){
+            ctx[0].globalAlpha = system.currentAlpha["gradient"];
+            let gradient;
+            if (document.querySelector("#direction-x").value != 0 && document.querySelector("#direction-y").value !=0){
+                gradient = ctx[0].createRadialGradient(system.coordsGradient[0],
+                                                            system.coordsGradient[1],
+                                                            system.coordsGradient[2],
+                                                            system.coordsGradient[3],
+                                                            system.coordsGradient[4],
+                                                            system.coordsGradient[5]);
+            }else{
+                gradient = ctx[0].createRadialGradient(120,100,system.height, 0,0,30);
+            }
+            
+            gradient.addColorStop(0, system.currentColor[0]);
+            gradient.addColorStop(1, system.currentColor[1]);
+            
+            ctx[0].fillStyle = gradient;
+            ctx[0].fillRect(0, 0, system.width, system.height);
+        }
+        ctx[0].globalAlpha = 1;
     }
 
-    if (system.currentFill=="mono"){
-        ctx[0].fillStyle = system.currentColor;
-        ctx[0].fillRect(0,0, system.width, system.height);
-    }else if (system.currentFill=="linear"){
-        let gradient = ctx[0].createLinearGradient(system.coordsGradient[0], 
-            system.coordsGradient[1], 
-            system.coordsGradient[2],
-            system.coordsGradient[3]);
-
-        // Добавление контрольных точек
-        gradient.addColorStop(0, system.currentColor[0]);
-        gradient.addColorStop(1, system.currentColor[1]);
-
-        // Установка стиля заливки и отрисовка прямоугольника градиента
-        ctx[0].fillStyle = gradient;
-        ctx[0].fillRect(0, 0, system.width, system.height);
-    }else if (system.currentFill=="radial"){
-        let gradient;
-        if (document.querySelector("#direction-x").value != 0 && document.querySelector("#direction-y").value !=0){
-            gradient = ctx[0].createRadialGradient(system.coordsGradient[0],
-                                                        system.coordsGradient[1],
-                                                        system.coordsGradient[2],
-                                                        system.coordsGradient[3],
-                                                        system.coordsGradient[4],
-                                                        system.coordsGradient[5]);
-        }else{
-            gradient = ctx[0].createRadialGradient(120,100,system.height, 0,0,30);
-        }
-        
-        gradient.addColorStop(0, system.currentColor[0]);
-        gradient.addColorStop(1, system.currentColor[1]);
-        
-        ctx[0].fillStyle = gradient;
-        ctx[0].fillRect(0, 0, system.width, system.height);
-    }
-
-    if (system.currentText){
+    if (system.existanseLayer["textLayer"]){
         ctx[0].fillStyle = textStyle.color;
         ctx[0].font = `${textStyle.fontSize} ${textStyle.fontFamily}`;
         

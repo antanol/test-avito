@@ -16,9 +16,18 @@ const ctx = [
 let system = {
     width: 200,
     height: 300,
+    existanseLayer:{
+        imgLayer: false,
+        fillLayer: false,
+        textLayer: false
+    },
     currentImgSrc: false,
     currentFill: false,
-    currentColor: false,
+    currentColor: "#000000",
+    currentAlpha: {
+        mono: 1,
+        gradient: 1
+    },
     coordsGradient: false,
     currentText: false
 };
