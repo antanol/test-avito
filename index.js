@@ -22,8 +22,8 @@ http.createServer(function(req,res){
         case "":
             serveStaticFile(res,'/src/index.html',"text/html");
             break;
-        case "/scripts/main.js":
-            serveStaticFile(res,'/src/scripts/main.js',"application/javascript");
+        case "/dist/bundle.js":
+            serveStaticFile(res,'/src/dist/bundle.js',"application/javascript");
             break;
         case "/styles/index.css":
             serveStaticFile(res,'/src/styles/index.css',"text/css");
