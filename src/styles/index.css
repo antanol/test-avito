@@ -72,6 +72,12 @@ body {
   grid-area: three;
 }
 
+.banner-maker .example::after {
+  content: '';
+  clear: both;
+  display: block;
+}
+
 .banner-maker .example-area {
   position: absolute;
   right: 10px;
@@ -112,5 +118,23 @@ body {
 
 .hide-address {
   display: none;
+}
+
+@media screen and (max-width: 740px) {
+  .banner-maker {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .banner-maker .example {
+    margin: 5px 0 10px;
+  }
+  .banner-maker .example-area {
+    left: 10px;
+  }
 }
 /*# sourceMappingURL=index.css.map */

@@ -23,6 +23,8 @@ window.onload = ()=>{
     canvas_layer[3].setAttribute("width", widthOfBanner);
     canvas_layer[0].setAttribute("height", heightOfBanner);
     canvas_layer[0].setAttribute("width", widthOfBanner);
+    // чтобы наши абсолютные канвасы не схлопывали место
+    document.querySelector(".example").style.height = heightOfBanner+"px";
     
     document.querySelector("#direction-x").setAttribute("max", widthOfBanner);
     document.querySelector("#direction-y").setAttribute("max", heightOfBanner)
