@@ -110,36 +110,34 @@ function showSub(evt){
     let arrows = document.querySelectorAll(".fa.arrows");
     let allSubs = document.querySelectorAll(".sub");
 
-    // for (let i=0; i<allSubs.length; i++){
-    //     if (!allSubs[i].classList.contains("hidden-sub")){
-    //         allSubs[i].classList.add("hidden-sub");
-    //     }
-    // };
     if (system.currentText == 'Пример вашего баннера'){
         system.currentText = '';
         ctx[3].clearRect(0, 0, system.width, system.height);
     }
     
     if (arrows[index].classList.contains("fa-chevron-down")){
-        checkboxes[index].checked = true;
-        arrows[index].classList.remove("fa-chevron-down");
-        arrows[index].classList.add("fa-chevron-up");
-        allSubs[index].classList.remove("hidden-sub");
+        openSub(index, checkboxes, arrows, allSubs);
     }else{
-        checkboxes[index].checked = false;
-        arrows[index].classList.remove("fa-chevron-up");
-        arrows[index].classList.add("fa-chevron-down");
-        allSubs[index].classList.add("hidden-sub");
+        closeSub(index, checkboxes, arrows, allSubs);
     }
+ 
+    if (index==1){
+        closeSub(2, checkboxes, arrows, allSubs);
+    }else if (index==2){
+        closeSub(1, checkboxes, arrows, allSubs);
+    }
+}
 
-    // Возможность сразу же при выборе пункта с заливкой получить фон.
-    // Отключено на случай, если юзер промахнется и случайно в уже готовом баннере откроет другую заливку. Ведь тогда всё "слетит")
-    // switch(Number(index)){
-    //     case 1:
-    //         oneColor();
-    //         break;
-    //     case '2':
-    //         gradientFill();
-    //         break;
-    // }
+function openSub(index, checkboxes, arrows, allSubs){
+    checkboxes[index].checked = true;
+    arrows[index].classList.remove("fa-chevron-down");
+    arrows[index].classList.add("fa-chevron-up");
+    allSubs[index].classList.remove("hidden-sub");
+}
+
+function closeSub(index, checkboxes, arrows, allSubs){
+    checkboxes[index].checked = false;
+    arrows[index].classList.remove("fa-chevron-up");
+    arrows[index].classList.add("fa-chevron-down");
+    allSubs[index].classList.add("hidden-sub");
 }
