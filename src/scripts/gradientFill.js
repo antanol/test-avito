@@ -138,7 +138,9 @@ function radialPosition(){
 
 function editAlphaGradient(evt){
     ctx[2].globalAlpha = evt.target.value/100;
-    system.currentAlpha["gradient"] = evt.target.value/100;
+    system.currentAlpha = evt.target.value/100;
+
+    document.querySelector("input[name='alpha-mono']").value = evt.target.value;
     gradientFill();
 }
 

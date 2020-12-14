@@ -11,7 +11,7 @@ function oneColor(evt){
 
     ctx[2].clearRect(0, 0, system.width, system.height);
     ctx[2].fillStyle = system.currentColor;
-    ctx[2].globalAlpha = system.currentAlpha["mono"];
+    ctx[2].globalAlpha = system.currentAlpha;
     ctx[2].fillRect(0, 0, system.width, system.height);
     
     system.existanseLayer["fillLayer"] = true;
@@ -19,7 +19,9 @@ function oneColor(evt){
 
 function editAlphaMono(evt){
     ctx[2].globalAlpha = evt.target.value/100;
-    system.currentAlpha["mono"] = evt.target.value/100;
+    system.currentAlpha = evt.target.value/100;
+
+    document.querySelector("input[name='alpha-grad']").value = evt.target.value;
     oneColor();
 }
 

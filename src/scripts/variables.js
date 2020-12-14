@@ -24,10 +24,7 @@ let system = {
     currentImgSrc: false,
     currentFill: false,
     currentColor: "#000000",
-    currentAlpha: {
-        mono: 1,
-        gradient: 1
-    },
+    currentAlpha: 1,
     coordsGradient: false,
     currentText: false
 };

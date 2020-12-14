@@ -28,11 +28,11 @@ function unblockedBtns(){
 function drawUpperLayers(){
     if (system.existanseLayer["fillLayer"]){
         if (system.currentFill=="mono"){
-            ctx[0].globalAlpha = system.currentAlpha["mono"];
+            ctx[0].globalAlpha = system.currentAlpha;
             ctx[0].fillStyle = system.currentColor;
             ctx[0].fillRect(0,0, system.width, system.height);
         }else if (system.currentFill=="linear"){
-            ctx[0].globalAlpha = system.currentAlpha["gradient"];
+            ctx[0].globalAlpha = system.currentAlpha;
 
             let gradient = ctx[0].createLinearGradient(system.coordsGradient[0], 
                 system.coordsGradient[1], 
@@ -47,7 +47,7 @@ function drawUpperLayers(){
             ctx[0].fillStyle = gradient;
             ctx[0].fillRect(0, 0, system.width, system.height);
         }else if (system.currentFill=="radial"){
-            ctx[0].globalAlpha = system.currentAlpha["gradient"];
+            ctx[0].globalAlpha = system.currentAlpha;
             let gradient;
             if (document.querySelector("#direction-x").value != 0 && document.querySelector("#direction-y").value !=0){
                 gradient = ctx[0].createRadialGradient(system.coordsGradient[0],
