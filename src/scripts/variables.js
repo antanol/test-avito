@@ -35,7 +35,7 @@ let textStyle = {
     startHeight: system.height/2,
     color: 'gray',
     fontFamily: "BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, sans-serif",
-    fontSize: "16px"
+    fontSize: "16"
 };
 
 export {canvas_layer, ctx, system, textStyle}

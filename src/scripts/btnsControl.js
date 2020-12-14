@@ -71,7 +71,7 @@ function drawUpperLayers(){
 
     if (system.existanseLayer["textLayer"]){
         ctx[0].fillStyle = textStyle.color;
-        ctx[0].font = `${textStyle.fontSize} ${textStyle.fontFamily}`;
+        ctx[0].font = `${textStyle.fontSize}px ${textStyle.fontFamily}`;
         
         if (typeof(system.currentText) == "string"){
             ctx[0].fillText(system.currentText, 10, textStyle.startHeight, textStyle.maxWidth);

@@ -10,22 +10,23 @@ function addTextInBanner(){
     // но и через изменения других свойств для текста (пока что)
 
     ctx[3].fillStyle = textStyle.color;
-    ctx[3].font = `${textStyle.fontSize} ${textStyle.fontFamily}`;
+    ctx[3].font = `${textStyle.fontSize}px ${textStyle.fontFamily}`;
 
     if (Math.floor(ctx[3].measureText(userText.value).width) > textStyle.maxWidth){
         let lines = getLines(ctx[3], userText.value, textStyle.maxWidth);
         let startHeight = textStyle.startHeight;
         for (let line of lines){
             ctx[3].fillText(line, 10, startHeight, textStyle.maxWidth);
-            startHeight += 20;
+            startHeight += Number(textStyle.fontSize);
         }
-
+        console.log(system);
         system.currentText = lines;
     }else{
         ctx[3].fillText(userText.value, 10, textStyle.startHeight, textStyle.maxWidth);
         system.currentText = userText.value;
     }
     system.existanseLayer["textLayer"] = true;
+        console.log(textStyle);
 };
 
 function getLines(ctx, text, maxWidth) {
@@ -48,7 +49,7 @@ function getLines(ctx, text, maxWidth) {
 }
 
 function editTextSize(evt){
-    textStyle.fontSize = evt.target.value+"px";
+    textStyle.fontSize = evt.target.value;
     addTextInBanner();
 }
 
