@@ -120,6 +120,10 @@ body {
   display: none;
 }
 
+.clipboard-status {
+  color: green;
+}
+
 @media screen and (max-width: 740px) {
   .banner-maker {
     display: -webkit-box;

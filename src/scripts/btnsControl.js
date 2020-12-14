@@ -116,7 +116,7 @@ function saveCanvasAsHTML(){
     navigator.clipboard.writeText(html)
     .then(() => {
         // Получилось!
-        console.log(`Вы скопировали ${html}`);
+        document.querySelector(".clipboard-status").innerText = "Ваш html сохранён в буфер обмена.";
     })
     .catch(err => {
         console.log('Что-то пошло не так...', err);
@@ -131,7 +131,7 @@ function saveCanvasAsJSON(){
     navigator.clipboard.writeText(json)
     .then(() => {
         // Получилось!
-        console.log(`Вы скопировали ${json}`);
+        document.querySelector(".clipboard-status").innerText = "Ваш json сохранён в буфер обмена.";
     })
     .catch(err => {
         console.log('Что-то пошло не так...', err);
