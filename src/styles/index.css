@@ -141,4 +141,19 @@ body {
     left: 10px;
   }
 }
+
+@media screen and (max-width: 475px) {
+  body {
+    padding: 10px;
+  }
+  .option .fa {
+    float: none;
+  }
+  .direction-linear {
+    max-width: 250px;
+  }
+  textarea {
+    max-width: 260px;
+  }
+}
 /*# sourceMappingURL=index.css.map */
